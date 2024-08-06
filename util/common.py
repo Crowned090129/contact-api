@@ -45,7 +45,7 @@ def build_swagger_config_json():
         with open(config_file_path, 'r') as file:
             config_data = json.load(file)
         config_data['servers'] = [
-            {"url": f"http://localhost:{ENVIRONMENT().get_port()}{ENVIRONMENT().get_prefix()}"},
+            {"url": f"http://{ENVIRONMENT().get_domain()}:{ENVIRONMENT().get_port()}{ENVIRONMENT().get_prefix()}"},
             {"url": f"http://{ENVIRONMENT().get_domain()}:{ENVIRONMENT().get_port()}{ENVIRONMENT().get_prefix()}"}
         ]
         with open(config_file_path, 'w') as new_file:
