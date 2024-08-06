@@ -1,0 +1,276 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Flask API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000"
+    },
+    {
+      "url": "http://localhost:5000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "contact",
+      "description": "CRUD Operations"
+    }
+  ],
+  "paths": {
+    "/contacts": {
+      "get": {
+        "tags": [
+          "contact"
+        ],
+        "summary": "Retrieve all contacts",
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contact"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "contact"
+        ],
+        "summary": "Create a contact",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "John"
+                  },
+                  "lastname": {
+                    "type": "string",
+                    "example": "Doe"
+                  },
+                  "mail": {
+                    "type": "string",
+                    "example": "john.doe@mail.com"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "example": "809-256-5744"
+                  }
+                },
+                "required": [
+                  "id",
+                  "name",
+                  "lastname",
+                  "mail",
+                  "phone"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contacts/{id}": {
+      "get": {
+        "tags": [
+          "contact"
+        ],
+        "summary": "Retrieve specific contact",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contact"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "contact"
+        ],
+        "summary": "Update a contact",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "ID of the contact to be updated"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "John"
+                  },
+                  "lastname": {
+                    "type": "string",
+                    "example": "Doe"
+                  },
+                  "mail": {
+                    "type": "string",
+                    "example": "john.doe@mail.com"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "example": "809-256-5744"
+                  }
+                },
+                "required": [
+                  "id",
+                  "name",
+                  "lastname",
+                  "mail",
+                  "phone"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Contact not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "contact"
+        ],
+        "summary": "Delete a contact",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "ID of the contact to be deleted"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted successfully"
+          },
+          "404": {
+            "description": "Contact not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Contact": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "John"
+          },
+          "lastname": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "mail": {
+            "type": "string",
+            "example": "john.doe@mail.com"
+          },
+          "phone": {
+            "type": "string",
+            "example": "809-256-5744"
+          }
+        }
+      }
+    }
+  }
+}
