@@ -12,8 +12,10 @@ from flask_swagger_ui import get_swaggerui_blueprint
 def start_backend():
     app = Flask(__name__)
     app.config['PROPAGATE_EXCEPTIONS'] = True
-    CORS(app, origins="*")
-    
+
+    # Initialize CORS
+    CORS(app, resources={r"/swagger/*": {"origins": "*"}})
+
     env = ENVIRONMENT()
     api = Api(app, prefix=env.get_prefix(), catch_all_404s=True)
     
@@ -28,7 +30,7 @@ def start_backend():
             "docExpansion": "none"
         },
     )
-    app.register_blueprint(swaggerui_blueprint)
+    app.register_blueprint(swaggerui_blueprint, url_prefix=env.get_prefix())
 
     # Error Handlers
     @app.errorhandler(NotFound)
@@ -42,7 +44,9 @@ def start_backend():
     @app.route('/')
     def redirect_to_prefix():
         prefix = env.get_prefix()
-        return redirect(prefix) if prefix else jsonify({"message": "Welcome to the Contact API"})
+        if prefix:
+            return redirect(prefix)
+        return jsonify({"message": "Welcome to the Contact API"})
 
     # Add Resources
     api.add_resource(SwaggerConfig, '/swagger-config')
