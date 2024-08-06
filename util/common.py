@@ -1,6 +1,7 @@
 import os
 import json
 import psycopg2
+import socket
 from string import Template
 from dotenv import load_dotenv
 
@@ -12,7 +13,9 @@ class ENVIRONMENT:
             project_dir = os.path.join(os.path.dirname(__file__), os.pardir)
             dotenv_path = os.path.join(project_dir, '.env')
             load_dotenv(dotenv_path)
-            cls._instance.domain = os.getenv("DOMAIN")
+            # cls._instance.domain = os.getenv("DOMAIN")
+            local_ip = socket.gethostbyname(socket.gethostname())
+            cls._instance.domain = local_ip
             cls._instance.port = os.getenv("PORT")
             cls._instance.prefix = os.getenv("PREFIX")
             cls._instance.database = os.getenv("DB_DATABASE")
